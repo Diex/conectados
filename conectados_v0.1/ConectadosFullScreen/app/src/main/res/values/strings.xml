@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Conectados</string>
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="instructions">Please Swipe</string>
+
+    <string-array name="desserts">
+        <item>Cupcake</item>
+        <item>Donut</item>
+        <item>Eclair</item>
+        <item>Froyo</item>
+        <item>Gingerbread</item>
+        <item>Honeycomb</item>
+        <item>Ice Cream Sandwich</item>
+        <item>Jelly Bean</item>
+        <item>Kit Kat</item>
+        <item>Lollipop</item>
+        <item>Marshmallow</item>
+        <item>Nougat</item>
+    </string-array>
+
+    <string name="description">Las tecnologías de las que hace uso las telecomunicaciones tiene una incidencia en la salud de las personas. Efectos malignos. En la actualidad, casi todas las telecomunicaciones se realizan usando fenómenos electromagnéticos, excepto las que se realizan por correo postal, mensajeros o palomas mensajeras.</string>
+</resources>
