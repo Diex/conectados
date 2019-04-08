@@ -2,8 +2,10 @@ package com.example.conectados;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -15,7 +17,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -43,6 +54,9 @@ public class FullscreenActivity extends AppCompatActivity {
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
+
+    JSONObject installations;
+
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -132,17 +146,34 @@ public class FullscreenActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Create the intent to start another activity
                 vp.setCurrentItem(0);
-//                vp.OnPageChangeListener.onPageSelected(0);
             }
         });
+
+
+        try {
+            installations =  new JSONObject(loadJSONFromAsset());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 
 
-
-
-
-//
+    String loadJSONFromAsset() {
+        String json = null;
+        try {
+            InputStream is = getAssets().open("json/data.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
+    }
 
 
     @Override
@@ -198,6 +229,8 @@ public class FullscreenActivity extends AppCompatActivity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
+
+
     // ---------
     String pageData[];          //Stores the text to swipe.
     LayoutInflater inflater;    //Used to create individual pages
@@ -206,6 +239,9 @@ public class FullscreenActivity extends AppCompatActivity {
 
     //Implement PagerAdapter Class to handle individual page creation
     class MyPagesAdapter extends PagerAdapter {
+
+        Typeface tf = Typeface.createFromAsset(getAssets(),
+                "fonts/merloneueround_bolditalic.otf");
         @Override
         public int getCount() {
             //Return total pages, here one for each data item
@@ -215,11 +251,40 @@ public class FullscreenActivity extends AppCompatActivity {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             View page = inflater.inflate(R.layout.page, null);
-            ((TextView)page.findViewById(R.id.title)).setText(pageData[position]);
+
+            ((TextView)page.findViewById(R.id.title)).setTypeface(tf);
+            ((TextView)page.findViewById(R.id.description)).setTypeface(tf);
+
+            JSONObject item;
+
+            try {
+
+                item = installations.getJSONArray("items").getJSONObject(position%2);
+
+                ((TextView)page.findViewById(R.id.title)).setText(item.getString("name"));
+                ((TextView)page.findViewById(R.id.description)).setText(item.getString("description"));
+
+                int id = getResources().getIdentifier(item.getString("img"),
+                        "drawable", getPackageName());
+
+                Bitmap bm = BitmapFactory.decodeResource(getResources(), id);
+                ((ImageView)page.findViewById(R.id.imageView)).setImageBitmap(bm);
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
             //Add the page to the front of the queue
             ((ViewPager) container).addView(page, 0);
+
+
+
             return page;
         }
+
+
         @Override
         public boolean isViewFromObject(View arg0, Object arg1) {
             //See if object from instantiateItem is related to the given view

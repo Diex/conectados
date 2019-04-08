@@ -6,11 +6,10 @@
     android:layout_height="match_parent"
     android:background="@android:color/black">
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/merlo_bold_italic"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:text="TextView"
@@ -27,12 +26,11 @@
         android:contentDescription="image"
         android:src="@drawable/antenas" />
 
-    <TextView
-        android:id="@+id/textView"
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/imageView"
-        android:fontFamily="@font/merlo_bold_italic"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="@string/description"

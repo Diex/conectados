@@ -1,0 +1,16 @@
+{
+  "items": [
+    {
+      "name": "Antenas",
+      "description": "Las tecnologías de las que hace uso las telecomunicaciones tiene una incidencia en la salud de las personas. Efectos malignos. En la actualidad, casi todas las telecomunicaciones se realizan usando fenómenos electromagnéticos, excepto las que se realizan por correo postal, mensajeros o palomas mensajeras. Las tecnologías de las que hace uso las telecomunicaciones tiene una incidencia en la salud de las personas. Efectos malignos. En la actualidad, casi todas las telecomunicaciones se realizan usando fenómenos electromagnéticos, excepto las que se realizan por correo postal, mensajeros o palomas mensajeras.",
+      "id": "lemon_1",
+      "img": "antenas"
+    },
+    {
+      "name": "Realidad virtual",
+      "description": "La realidad virtual (RV) es un entorno de escenas u objetos de apariencia real. La acepción más común refiere a un entorno generado mediante tecnología informática, que crea en el usuario la sensación de estar inmerso en él.",
+      "id": "lemon_2",
+      "img": "vr"
+    }
+  ]
+}
