@@ -1,4 +1,4 @@
-package com.diex.android.conectados.estimote;
+package com.estimote.proximity.estimote;
 
 //
 // Running into any issues? Drop us an email to: contact@estimote.com

@@ -28,6 +28,7 @@ public class ProximityContentManager {
     private EstimoteCloudCredentials cloudCredentials;
     private ProximityObserver.Handler proximityObserverHandler;
 
+
     public ProximityContentManager(Context context, ProximityContentAdapter proximityContentAdapter, EstimoteCloudCredentials cloudCredentials) {
         this.context = context;
         this.proximityContentAdapter = proximityContentAdapter;
@@ -48,8 +49,8 @@ public class ProximityContentManager {
                 .build();
 
         ProximityZone zone = new ProximityZoneBuilder()
-                .forTag("proximity-single-mcs")
-                .inCustomRange(3.0)
+                .forTag("game")
+                .inCustomRange(1.0)
                 .onContextChange(new Function1<Set<? extends ProximityZoneContext>, Unit>() {
                     @Override
                     public Unit invoke(Set<? extends ProximityZoneContext> contexts) {
@@ -57,13 +58,13 @@ public class ProximityContentManager {
                         List<ProximityContent> nearbyContent = new ArrayList<>(contexts.size());
 
                         for (ProximityZoneContext proximityContext : contexts) {
-                            String title = proximityContext.getAttachments().get("proximity-single-mcs/title");
+                            String title = proximityContext.getAttachments().get("gameId");
                             if (title == null) {
                                 title = "unknown";
                             }
                             String subtitle = Utils.getShortIdentifier(proximityContext.getDeviceId());
-
-                            nearbyContent.add(new ProximityContent(title, subtitle));
+                            String c = proximityContext.getAttachments().get("color");
+                            nearbyContent.add(new ProximityContent(title, subtitle, c));
                         }
 
                         proximityContentAdapter.setNearbyContent(nearbyContent);

@@ -11,12 +11,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.diex.android.conectados.estimote.ProximityContentAdapter;
 import com.diex.android.conectados.estimote.ProximityContentManager;
+import com.diex.android.conectados.estimote.VisitPoint;
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.Requirement;
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory;
 import com.estimote.proximity_sdk.api.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import kotlin.Unit;
@@ -29,16 +30,22 @@ public class MainActivity extends AppCompatActivity implements Visitable{
             new EstimoteCloudCredentials("aboiledtiger-gmail-com-s-p-bux", "78c1cf864c4fb4f63e3758f9697aefdd");
 
     private ProximityContentManager proximityContentManager;
-    private ProximityContentAdapter proximityContentAdapter;
 
     ViewPager itemsViewer;
 
+    ArrayList<String>  visitPointsNames = new ArrayList<String>();
+    ArrayList<VisitPoint> points;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -55,11 +62,7 @@ public class MainActivity extends AppCompatActivity implements Visitable{
         //set the adapter that will create the individual pages
         itemsViewer.setAdapter(new ItemsAdapter(this));
 
-        // estimote
-
-        proximityContentAdapter = new ProximityContentAdapter(this);
-
-
+        // estimoe
 
         RequirementsWizardFactory
                 .createEstimoteRequirementsWizard()
@@ -86,22 +89,72 @@ public class MainActivity extends AppCompatActivity implements Visitable{
                                 return null;
                             }
                         });
+
+        PointsBuilder pointsBuilder = new PointsBuilder(this, "json/itemsData.json");
+        points = pointsBuilder.getPointsList();
+        for(VisitPoint vp : points) System.out.println(vp.toString());
     }
+
+
 
 
 
     @Override
-    public void onEnterZone(String s){
-        System.out.println(s);
+    public void onEnterZone(ProximityZoneContext s){
+        System.out.println(">>>>> ENTERING...: ");
+        printContext(s);
+        createVisitZone(s);
+
+    }
+
+    void createVisitZone(ProximityZoneContext s){
+//        String zoneId = s.getAttachments().get("beaconId");
+//        if(visitPointsNames.contains(zoneId)){
+//            visitPointsNames.remove(visitPointsNames.indexOf(zoneId));
+//            points.add(new VisitPoint());
+//            System.out.println("xxxx creo la zona...: " + zoneId);
+//        }
     }
 
     @Override
-    public void onExitZone(String s){
-        System.out.println(s);
+    public void onExitZone(ProximityZoneContext s){
+//        System.out.println("<<<< EXITING...: ");
+//        System.out.println(s);
     }
 
+    @Override
+    public void onContextChange(ArrayList<ProximityZoneContext> pzc){
+//        System.out.println("|||| something change...: ");
+//        for (ProximityZoneContext p : pzc) {
+//            printContext(p);
+//            createVisitZone(p);
+//        }
+    }
+
+
+    @Override
+    public void onEnterCloseZone(ProximityZoneContext s){
+        // si esta la zona (point) creado lo activo...
+        String zoneId = s.getAttachments().get("beaconId");
+        System.out.println("ESTOY REALMENTE CERCA...");
+        if(points.contains(zoneId)){
+            System.out.println("habilito la zona: " +zoneId);
+        };
+    }
+
+
+
+    private void printContext(ProximityZoneContext context){
+
+
+        for (String name: context.getAttachments().keySet()){
+            String key = name.toString();
+            String value = context.getAttachments().get(name).toString();
+            System.out.println(key + " " + value);
+        }
+    }
     private void startProximityContentManager() {
-        proximityContentManager = new ProximityContentManager(this, proximityContentAdapter, cloudCredentials);
+        proximityContentManager = new ProximityContentManager(this, cloudCredentials);
         proximityContentManager.setOnEnter(this);
         proximityContentManager.start();
 
@@ -127,7 +180,6 @@ public class MainActivity extends AppCompatActivity implements Visitable{
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;

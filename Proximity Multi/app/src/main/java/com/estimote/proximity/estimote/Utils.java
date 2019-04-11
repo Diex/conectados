@@ -1,9 +1,8 @@
-package com.diex.android.conectados.estimote;
+package com.estimote.proximity.estimote;
 
 import android.graphics.Color;
 
-import com.diex.android.conectados.R;
-
+import com.estimote.proximity.R;
 
 //
 // Running into any issues? Drop us an email to: contact@estimote.com
@@ -36,7 +35,7 @@ class Utils {
                 return Color.rgb(195, 192, 16);
 
             default:
-                return Color.rgb(0,0,0);
+                return R.color.defaultContentBackground;
         }
     }
 }

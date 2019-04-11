@@ -1,4 +1,4 @@
-package com.diex.android.conectados.estimote;
+package com.estimote.proximity.estimote;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,8 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-
-import com.diex.android.conectados.R;
+import com.estimote.proximity.R;
 
 import java.util.ArrayList;
 import java.util.List;

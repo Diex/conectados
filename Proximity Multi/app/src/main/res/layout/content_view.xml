@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/beaconImage"
-        android:layout_width="128dp"
-        android:layout_height="192dp"
+        android:layout_width="32dp"
+        android:layout_height="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -29,18 +29,18 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="blueberry"
             android:textColor="@android:color/white"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="blueberry" />
 
         <TextView
             android:id="@+id/subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="f04d...b13c"
             android:textColor="@android:color/white"
-            android:textSize="17sp" />
+            android:textSize="10sp"
+            tools:text="f04d...b13c" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

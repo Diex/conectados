@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.diex.android.conectados.MainActivity;
 import com.diex.android.conectados.Visitable;
 import com.estimote.proximity_sdk.api.EstimoteCloudCredentials;
 import com.estimote.proximity_sdk.api.ProximityObserver;
@@ -14,6 +13,11 @@ import com.estimote.proximity_sdk.api.ProximityObserverBuilder;
 import com.estimote.proximity_sdk.api.ProximityZone;
 import com.estimote.proximity_sdk.api.ProximityZoneBuilder;
 import com.estimote.proximity_sdk.api.ProximityZoneContext;
+
+
+
+import java.util.ArrayList;
+import java.util.Set;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
@@ -25,14 +29,14 @@ import kotlin.jvm.functions.Function1;
 public class ProximityContentManager {
 
     private Context ctx;
-    private ProximityContentAdapter proximityContentAdapter;
+
     private EstimoteCloudCredentials cloudCredentials;
     private ProximityObserver.Handler proximityObserverHandler;
     private Visitable visitable;
 
-    public ProximityContentManager(Context context, ProximityContentAdapter proximityContentAdapter, EstimoteCloudCredentials cloudCredentials) {
+
+    public ProximityContentManager(Context context, EstimoteCloudCredentials cloudCredentials) {
         this.ctx = context;
-        this.proximityContentAdapter = proximityContentAdapter;
         this.cloudCredentials = cloudCredentials;
     }
 
@@ -63,48 +67,47 @@ public class ProximityContentManager {
                 })
                 .build();
 
-        ProximityZone zone = new ProximityZoneBuilder()
+
+
+        ProximityZone closer = new ProximityZoneBuilder()
                 .forTag("game")
-                .inCustomRange(1.0)
-
-
-//                .onContextChange(new Function1<Set<? extends ProximityZoneContext>, Unit>() {
-//                    @Override
-//                    //The type with only one value: the Unit object. This type corresponds to the void type in Java.
-//                    //A higher-order function is a function that takes functions as parameters, or returns a function.
-//                    public Unit invoke(Set<? extends ProximityZoneContext> contexts) {
-//
-//                        List<ProximityContent> nearbyContent = new ArrayList<>(contexts.size());
-//
-//                        for (ProximityZoneContext proximityContext : contexts) {
-//                            String title = proximityContext.getAttachments().get("gameId");
-//                            if (title == null) {
-//                                title = "unknown";
-//                            }
-//                            String subtitle = Utils.getShortIdentifier(proximityContext.getDeviceId());
-//                            String c = proximityContext.getAttachments().get("color");
-//                            nearbyContent.add(new ProximityContent(title, subtitle, c));
-//                        }
-//
-//                        proximityContentAdapter.setNearbyContent(nearbyContent);
-//                        proximityContentAdapter.notifyDataSetChanged();
-//
-//                        return null;
-//                    }
-//                })
+                .inCustomRange(0.5)
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
                     @Override
                     public Unit invoke(ProximityZoneContext context) {
-                        String deskOwner = context.getAttachments().get("desk-owner");
-                        Log.d("app", "Welcome to " + deskOwner + "'s desk");
-                        visitable.onEnterZone(context.getAttachments().get("gameId"));
+                        visitable.onEnterCloseZone(context);
+                        return null;
+                    }
+                })
+                .build();
+
+        ProximityZone zone = new ProximityZoneBuilder()
+                .forTag("game")
+                .inCustomRange(2.0)
+                .onContextChange(new Function1<Set<? extends ProximityZoneContext>, Unit>() {
+                    @Override
+                    //The type with only one value: the Unit object. This type corresponds to the void type in Java.
+                    //A higher-order function is a function that takes functions as parameters, or returns a function.
+                    public Unit invoke(Set<? extends ProximityZoneContext> contexts) {
+                        ArrayList<ProximityZoneContext> data = new ArrayList<ProximityZoneContext>();
+                        for (ProximityZoneContext proximityContext : contexts) {
+                          data.add(proximityContext);
+                        }
+                        visitable.onContextChange(data);
+                        return null;
+                    }
+                })
+                .onEnter(new Function1<ProximityZoneContext, Unit>() {
+                    @Override
+                    public Unit invoke(ProximityZoneContext context) {
+                        visitable.onEnterZone(context);
                         return null;
                     }
                 })
                 .onExit(new Function1<ProximityZoneContext, Unit>() {
                     @Override
                     public Unit invoke(ProximityZoneContext context) {
-                        visitable.onExitZone(context.getAttachments().get("gameId"));
+                        visitable.onExitZone(context);
                         Log.d("app", "Bye bye, come again!");
                         return null;
                     }
@@ -112,6 +115,7 @@ public class ProximityContentManager {
                 .build();
 
         proximityObserverHandler = proximityObserver.startObserving(zone);
+        proximityObserverHandler = proximityObserver.startObserving(closer);
     }
 
     public void stop() {
