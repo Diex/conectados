@@ -63,14 +63,14 @@ public class ItemsAdapter extends PagerAdapter {
 
         ((TextView)page.findViewById(R.id.title)).setTypeface(merloBold);
 
-
-//        ((TextView)page.findViewById(R.id.description)).setTypeface(merloLight);
-//        ((TextView)page.findViewById(R.id.description)).setMovementMethod(new ScrollingMovementMethod());
+        ((TextView)page.findViewById(R.id.description)).setTypeface(merloLight);
+        ((TextView)page.findViewById(R.id.description)).setMovementMethod(new ScrollingMovementMethod());
 
 
         VisitPoint current = installations.get(position);
+
         ((TextView)page.findViewById(R.id.title)).setText(current.getTitle());
-//        ((TextView)page.findViewById(R.id.description)).setText(current.getDescription());
+        ((TextView)page.findViewById(R.id.description)).setText(current.getDescription());
 
         int id = ctx.getResources().getIdentifier(current.getImg(),
                 "drawable", ctx.getPackageName());

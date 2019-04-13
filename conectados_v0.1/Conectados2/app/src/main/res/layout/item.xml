@@ -9,7 +9,8 @@
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="61dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:padding="8sp"
         android:text="TextView"
         android:textAlignment="viewStart"
@@ -21,12 +22,22 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
         android:contentDescription="image"
         android:src="@drawable/dummy"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
 
-
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/imageView"
+        android:padding="8dp"
+        android:scrollbars="vertical"
+        android:text="Una antena es un dispositivo (conductor metálico) usado para las transmisiones en frecuencias AM o FM, diseñado con el objetivo de emitir y/o recibir ondas ..."
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
 
 </android.support.constraint.ConstraintLayout>
