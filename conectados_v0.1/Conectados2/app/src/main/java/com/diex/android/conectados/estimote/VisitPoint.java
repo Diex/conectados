@@ -13,6 +13,9 @@ public class VisitPoint {
 
     // data para mostrar...
     private String id;
+
+
+
     private String title;
     private String description;
     private String img;
@@ -52,11 +55,29 @@ public class VisitPoint {
         return vp;
     }
 
+
+
     public String toString(){
         return "beaconId: " + id + "\n"+
                 "title: " + title + "\n"+
                 "description: " + description+ "\n"+
                 "img: " + img + "\n"+
                 "---------------";
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getImg() {
+        return img;
     }
 }

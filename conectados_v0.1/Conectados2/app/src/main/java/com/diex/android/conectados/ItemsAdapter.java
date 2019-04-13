@@ -13,11 +13,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.diex.android.conectados.estimote.VisitPoint;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class ItemsAdapter extends PagerAdapter {
 
@@ -27,13 +30,15 @@ public class ItemsAdapter extends PagerAdapter {
     Typeface merloBold;
     Typeface merloLight;
 
-    JSONObject itemsData;
+
     Context ctx;
 
     LayoutInflater inflater;    //Used to create individual pages
-
-    public ItemsAdapter(Context ctx){
+    ArrayList<VisitPoint> installations;
+    public ItemsAdapter(Context ctx, ArrayList<VisitPoint> installations){
         this.ctx = ctx;
+        this.installations = installations;
+
 
         merloBold = Typeface.createFromAsset(this.ctx.getAssets(),
                 "fonts/merloneueround_bolditalic.otf");
@@ -43,41 +48,13 @@ public class ItemsAdapter extends PagerAdapter {
 
         //get an inflater to be used to create single pages
         inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        try {
-            itemsData =  new JSONObject(loadJSONFromAsset());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
-    private String loadJSONFromAsset() {
-        String json = null;
-        try {
-
-            InputStream is = ctx.getAssets().open("json/itemsData.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-    }
 
     @Override
     public int getCount() {
-        //Return total pages, here one for each data item
+        return installations.size();
 
-        try {
-            return itemsData.getJSONArray("items").length();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return 0;
     }
     //Create the given page (indicated by position)
     @Override
@@ -85,34 +62,26 @@ public class ItemsAdapter extends PagerAdapter {
         View page = inflater.inflate(R.layout.item, null);
 
         ((TextView)page.findViewById(R.id.title)).setTypeface(merloBold);
-        ((TextView)page.findViewById(R.id.description)).setTypeface(merloLight);
-        ((TextView)page.findViewById(R.id.description)).setMovementMethod(new ScrollingMovementMethod());
-
-        JSONObject item;
-
-        try {
-
-            item = itemsData.getJSONArray("items").getJSONObject(position%2);
-
-            ((TextView)page.findViewById(R.id.title)).setText(item.getString("name"));
-            ((TextView)page.findViewById(R.id.description)).setText(item.getString("description"));
-
-            int id = ctx.getResources().getIdentifier(item.getString("img"),
-                    "drawable", ctx.getPackageName());
-
-            Bitmap bm = BitmapFactory.decodeResource(ctx.getResources(), id);
-            ((ImageView)page.findViewById(R.id.imageView)).setImageBitmap(bm);
 
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        ((TextView)page.findViewById(R.id.description)).setTypeface(merloLight);
+//        ((TextView)page.findViewById(R.id.description)).setMovementMethod(new ScrollingMovementMethod());
+
+
+        VisitPoint current = installations.get(position);
+        ((TextView)page.findViewById(R.id.title)).setText(current.getTitle());
+//        ((TextView)page.findViewById(R.id.description)).setText(current.getDescription());
+
+        int id = ctx.getResources().getIdentifier(current.getImg(),
+                "drawable", ctx.getPackageName());
+
+
+        Bitmap bm = BitmapFactory.decodeResource(ctx.getResources(), id);
+        ((ImageView)page.findViewById(R.id.imageView)).setImageBitmap(bm);
 
 
         //Add the page to the front of the queue
         ((ViewPager) container).addView(page, 0);
-
-
 
         return page;
     }

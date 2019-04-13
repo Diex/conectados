@@ -1,40 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black">
+    android:background="@color/colorPrimary">
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="100sp"
+        android:layout_height="61dp"
+        android:padding="8sp"
         android:text="TextView"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@android:color/white"
-        android:padding="8sp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:layout_below="@id/title"
+        android:layout_height="wrap_content"
         android:contentDescription="image"
-        android:src="@drawable/dummy" />
+        android:src="@drawable/dummy"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/description"
-        android:layout_below="@id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="137dp"
-        android:layout_alignParentStart="true"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:scrollbars="vertical"
-        android:text="Una antena es un dispositivo (conductor metálico) usado para las transmisiones en frecuencias AM o FM, diseñado con el objetivo de emitir y/o recibir ondas ..."
-        android:textColor="@android:color/white"
-        android:textSize="14sp" />
-</RelativeLayout>
+
+
+
+</android.support.constraint.ConstraintLayout>
