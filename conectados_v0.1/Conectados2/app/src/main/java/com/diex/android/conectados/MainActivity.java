@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements Visitable{
 
         PointsBuilder pointsBuilder = new PointsBuilder(this, "json/itemsData.json");
         installations = pointsBuilder.getPointsList();
-        for(VisitPoint vp : installations) System.out.println(vp.toString());
+//        for(VisitPoint vp : installations) System.out.println(vp.toString());
 
         itemsViewer=(ViewPager)findViewById(R.id.itemsViewer);
         itemsViewer.setAdapter(new ItemsAdapter(this, installations));
@@ -99,6 +99,13 @@ public class MainActivity extends AppCompatActivity implements Visitable{
 
     }
 
+
+    public void setCurrentItem(VisitPoint vp){
+        System.out.println("------- set current item: ---------");
+        System.out.println(vp);
+        System.out.println(installations.indexOf(vp));
+        itemsViewer.setCurrentItem(installations.indexOf(vp));
+    }
 
 
 
@@ -134,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements Visitable{
 
     private void updateCheckboxes(){
         for(VisitPoint point : installations){
+            if(point.getId().equals("game_0")) continue;
             CheckBox checkBox = (CheckBox) findViewById(getResId(point.getId(), R.id.class));
             checkBox.setChecked(point.status());
         }

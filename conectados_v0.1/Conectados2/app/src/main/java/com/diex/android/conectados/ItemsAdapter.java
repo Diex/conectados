@@ -35,6 +35,7 @@ public class ItemsAdapter extends PagerAdapter {
 
     LayoutInflater inflater;    //Used to create individual pages
     ArrayList<VisitPoint> installations;
+
     public ItemsAdapter(Context ctx, ArrayList<VisitPoint> installations){
         this.ctx = ctx;
         this.installations = installations;
@@ -59,6 +60,9 @@ public class ItemsAdapter extends PagerAdapter {
     //Create the given page (indicated by position)
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+
+        VisitPoint current = installations.get(position);// findPosition(position);
+
         View page = inflater.inflate(R.layout.item, null);
 
         ((TextView)page.findViewById(R.id.title)).setTypeface(merloBold);
@@ -67,7 +71,6 @@ public class ItemsAdapter extends PagerAdapter {
         ((TextView)page.findViewById(R.id.description)).setMovementMethod(new ScrollingMovementMethod());
 
 
-        VisitPoint current = installations.get(position);
 
         ((TextView)page.findViewById(R.id.title)).setText(current.getTitle());
         ((TextView)page.findViewById(R.id.description)).setText(current.getDescription());
@@ -85,6 +88,7 @@ public class ItemsAdapter extends PagerAdapter {
 
         return page;
     }
+
 
 
     @Override

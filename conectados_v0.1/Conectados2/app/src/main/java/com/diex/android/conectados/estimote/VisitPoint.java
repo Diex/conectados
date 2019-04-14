@@ -26,8 +26,7 @@ public class VisitPoint {
     }
 
     public void isClose(){
-        Date d = new Date();
-        enterTime = d.getTime();
+
     }
 
     public void exit(){
@@ -35,10 +34,10 @@ public class VisitPoint {
 
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return this.id.equals(obj);
-    }
+//    @Override
+//    public boolean equals(Object obj) {
+//        return this.id.equals(obj);
+//    }
 
     public static VisitPoint fromJSONObject(JSONObject data){
         VisitPoint vp = new VisitPoint();
@@ -62,7 +61,7 @@ public class VisitPoint {
                 "title: " + title + "\n"+
                 "description: " + description+ "\n"+
                 "img: " + img + "\n"+
-                "---------------";
+               super.toString();
     }
 
     public String getId() {
@@ -82,6 +81,8 @@ public class VisitPoint {
     }
 
     public void setIsOn(){
+        if(status) return; // si ya estoy on, sigo de largo
+        setEnterTime();
         status = true;
     }
 
@@ -92,4 +93,15 @@ public class VisitPoint {
     public boolean status(){
         return this.status;
     }
+
+    void setEnterTime(){
+        Date d = new Date();
+        enterTime = d.getTime();
+    }
+
+    public long getPersistenceTime(){
+        Date now = new Date();
+        return (now.getTime() - enterTime) / 1000; // seconds
+    }
+
 }

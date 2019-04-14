@@ -1,6 +1,13 @@
 {
   "items": [
     {
+      "description": "Te damos la bienvenida al espacio fundacion telefonica. Esperamos que disfrutes la visita",
+      "img": "drawable/dummy",
+      "tag": "game",
+      "gameId": "Bienvenidos",
+      "beaconId": "game_0"
+    },
+    {
       "description": "El espacio de juego es una mesa con una pantalla enmascarada en una mesa rectangular. Los participantes (chicos de 9 años en adelante) dispondrán de cartas  y una zona de activación, donde se apoyarán las cartas para jugar (detección por RFID). También contarán con otros elementos analógicos de comando como botoneras y perilla.\n El juego tiene como eje las tecnologías de las telecomunicaciones. Consiste en ir superando un conjunto de desafíos participando en equipo, donde el contrincante es el tiempo y la complejidad de cada desafío.  \nUna vez comenzado el juego se van sucediendo los distintos desafíos, en la medida que puedan vencer el desafío anterior. \n\nDesafíos: \n\n.Comunicación Morse \n.Comunicación de dos ciudades \n.Trivia en equipo \n.Time line \n.Encontrar el intruso",
       "img": "drawable/dummy",
       "tag": "game",
