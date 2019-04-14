@@ -19,6 +19,7 @@ public class VisitPoint {
     private String description;
     private String img;
 
+    private boolean status = false;
 
     public VisitPoint(){
 
@@ -78,5 +79,17 @@ public class VisitPoint {
 
     public String getImg() {
         return img;
+    }
+
+    public void setIsOn(){
+        status = true;
+    }
+
+    public void setIsOff(){
+        status = false;
+    }
+
+    public boolean status(){
+        return this.status;
     }
 }

@@ -92,30 +92,31 @@ public class ProximityContentManager {
                         ArrayList<ProximityZoneContext> data = new ArrayList<ProximityZoneContext>();
                         for (ProximityZoneContext proximityContext : contexts) {
                           data.add(proximityContext);
+                          System.out.println(proximityContext.toString());
                         }
                         visitable.onContextChange(data);
                         return null;
                     }
                 })
-                .onEnter(new Function1<ProximityZoneContext, Unit>() {
-                    @Override
-                    public Unit invoke(ProximityZoneContext context) {
-                        visitable.onEnterZone(context);
-                        return null;
-                    }
-                })
-                .onExit(new Function1<ProximityZoneContext, Unit>() {
-                    @Override
-                    public Unit invoke(ProximityZoneContext context) {
-                        visitable.onExitZone(context);
-                        Log.d("app", "Bye bye, come again!");
-                        return null;
-                    }
-                })
+//                .onEnter(new Function1<ProximityZoneContext, Unit>() {
+//                    @Override
+//                    public Unit invoke(ProximityZoneContext context) {
+//                        visitable.onEnterZone(context);
+//                        return null;
+//                    }
+//                })
+//                .onExit(new Function1<ProximityZoneContext, Unit>() {
+//                    @Override
+//                    public Unit invoke(ProximityZoneContext context) {
+//                        visitable.onExitZone(context);
+//                        Log.d("app", "Bye bye, come again!");
+//                        return null;
+//                    }
+//                })
                 .build();
 
         proximityObserverHandler = proximityObserver.startObserving(zone);
-        proximityObserverHandler = proximityObserver.startObserving(closer);
+//        proximityObserverHandler = proximityObserver.startObserving(closer);
     }
 
     public void stop() {

@@ -1,15 +1,13 @@
 package com.diex.android.conectados;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.CheckBox;
 import android.widget.Toolbar;
 
 import com.diex.android.conectados.estimote.ProximityContentManager;
@@ -18,6 +16,7 @@ import com.estimote.mustard.rx_goodness.rx_requirements_wizard.Requirement;
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory;
 import com.estimote.proximity_sdk.api.*;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements Visitable{
 
     ViewPager itemsViewer;
     ArrayList<VisitPoint> installations;
+    VisitController visitController;
 
 
     @Override
@@ -94,6 +94,9 @@ public class MainActivity extends AppCompatActivity implements Visitable{
         itemsViewer=(ViewPager)findViewById(R.id.itemsViewer);
         itemsViewer.setAdapter(new ItemsAdapter(this, installations));
 
+        visitController = new VisitController(this);
+        visitController.setInstallationsToMonitor(installations);
+
     }
 
 
@@ -125,14 +128,32 @@ public class MainActivity extends AppCompatActivity implements Visitable{
 
     @Override
     public void onContextChange(ArrayList<ProximityZoneContext> pzc){
-//        System.out.println("|||| something change...: ");
-//        for (ProximityZoneContext p : pzc) {
-//            printContext(p);
-//            createVisitZone(p);
-//        }
-
-
+        visitController.onContextChanged(pzc);
+        updateCheckboxes();
     }
+
+    private void updateCheckboxes(){
+        for(VisitPoint point : installations){
+            CheckBox checkBox = (CheckBox) findViewById(getResId(point.getId(), R.id.class));
+            checkBox.setChecked(point.status());
+        }
+    }
+
+    public static int getResId(String resName, Class<?> c) {
+
+        try {
+            Field idField = c.getDeclaredField(resName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+
+
+
+
 
 
     @Override
