@@ -32,12 +32,13 @@
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/description"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/imageView"
+        android:layout_height="0dp"
         android:padding="8dp"
         android:scrollbars="vertical"
         android:text="Una antena es un dispositivo (conductor metálico) usado para las transmisiones en frecuencias AM o FM, diseñado con el objetivo de emitir y/o recibir ondas ..."
         android:textColor="@android:color/white"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView" />
 
 </android.support.constraint.ConstraintLayout>

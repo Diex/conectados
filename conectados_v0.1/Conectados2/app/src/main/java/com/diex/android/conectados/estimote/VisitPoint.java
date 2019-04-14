@@ -10,11 +10,10 @@ public class VisitPoint {
 
     private long enterTime = -1;
     private long exitTime = 0;
+    private int visits = 0;
 
     // data para mostrar...
     private String id;
-
-
 
     private String title;
     private String description;

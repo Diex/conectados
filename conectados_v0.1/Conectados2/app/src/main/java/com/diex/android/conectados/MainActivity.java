@@ -5,10 +5,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toolbar;
 
 import com.diex.android.conectados.estimote.ProximityContentManager;
 import com.diex.android.conectados.estimote.VisitPoint;
@@ -40,9 +42,10 @@ public class MainActivity extends AppCompatActivity implements Visitable{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
-//        Toolbar toolbar = findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
+
 
 
 //        FloatingActionButton fab = findViewById(R.id.fab);
@@ -127,6 +130,8 @@ public class MainActivity extends AppCompatActivity implements Visitable{
 //            printContext(p);
 //            createVisitZone(p);
 //        }
+
+
     }
 
 
@@ -179,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements Visitable{
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_finish) {
             return true;
         }
 
