@@ -2,6 +2,9 @@ package com.diex.android.conectados;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -43,14 +46,16 @@ public class Messenger extends AsyncTask<URL, Integer, Long> {
             Date d = new Date();
             StringBuilder result = new StringBuilder();
             result.append("session=");
-//            result.append(URLEncoder.encode(sesion, "UTF-8"));
-            result.append(sesion);
+            result.append(URLEncoder.encode(sesion, "UTF-8"));
+//            result.append(sesion);
             result.append("&timestamp=");
-//            result.append(URLEncoder.encode(""+d.getTime(), "UTF-8"));
-            result.append(""+d.getTime());
+            result.append(URLEncoder.encode(""+d.getTime(), "UTF-8"));
+//            result.append(""+d.getTime());
             result.append("&visitPoint=");
-//            result.append(URLEncoder.encode(visitPointId+"1234567890", "UTF-8"));
+            result.append(URLEncoder.encode(visitPointId, "UTF-8"));
             result.append(visitPointId);
+
+
             urlConnection.setRequestProperty("Content-Length", ""+result.toString().length());
             DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
             wr.writeBytes(result.toString());
@@ -74,7 +79,15 @@ public class Messenger extends AsyncTask<URL, Integer, Long> {
     }
 
     protected void onPostExecute(Long result) {
-        Toast.makeText(context, "mensage enviado...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Estás visitando...", Toast.LENGTH_SHORT).show();
+        Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        // Vibrate for 500 milliseconds
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            //deprecated in API 26
+            v.vibrate(100);
+        }
 //            showDialog("Downloaded " + result + " bytes");
     }
 
@@ -86,7 +99,7 @@ public class Messenger extends AsyncTask<URL, Integer, Long> {
             urlConnection.setDoInput(true);
             urlConnection.setRequestMethod("POST");
             urlConnection.setRequestProperty("Content-Type",
-                    "application/x-www-form-urlencoded");
+                    "text/plain");
             urlConnection.setRequestProperty("User-Agent", "diex");
             urlConnection.setUseCaches (false);
             urlConnection.setChunkedStreamingMode(255);
