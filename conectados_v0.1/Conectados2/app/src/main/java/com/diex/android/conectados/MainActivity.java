@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements Visitable{
         final Messenger messenger = new Messenger(this);
         messenger.connectToServer();;
         messenger.setSesion("xxxxxxxx");
-        messenger.setVisitiPointId(vp.getId());
+        messenger.setVisitPointId(vp.getId());
         messenger.execute();
 
     }

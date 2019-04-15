@@ -79,11 +79,16 @@ public class VisitController {
         ArrayList<VisitPoint> actives = new ArrayList<VisitPoint>();
 
 
-
+        String acc = "";
         for(VisitPoint visitPoint : installations){
+            acc += "-0";
             if(!visitPoint.isActive()) continue;
             actives.add(visitPoint);
+            acc = acc.substring(0,acc.length() - 1);
+            acc += "1";
         }
+
+        System.out.println(acc);
 
         if(actives.size() < 1) return;
 

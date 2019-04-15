@@ -5,21 +5,12 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedWriter;
 import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 public class Messenger extends AsyncTask<URL, Integer, Long> {
 
@@ -34,34 +25,33 @@ public class Messenger extends AsyncTask<URL, Integer, Long> {
 
 
     String sesion = "";
-    String visitiPointId = "";
+    String visitPointId = "";
 
     public void setSesion(String sesion) {
         this.sesion = sesion;
     }
 
-    public void setVisitiPointId(String visitiPointId) {
-        this.visitiPointId = visitiPointId;
+    public void setVisitPointId(String visitPointId) {
+        this.visitPointId = visitPointId;
     }
 
     protected Long doInBackground(URL... urls) {
-        HashMap data = new HashMap();
 
-        data.put("session", sesion);
-        Date d = new Date();
-        data.put("timestamp", ""+ d.getTime());
-        data.put("visitPoint", visitiPointId);
 
 
         try {
-
+            Date d = new Date();
             StringBuilder result = new StringBuilder();
-            result.append("session="+sesion);
-
-//            OutputStream os = urlConnection.getOutputStream();
-//
-//            os.write();
-
+            result.append("session=");
+//            result.append(URLEncoder.encode(sesion, "UTF-8"));
+            result.append(sesion);
+            result.append("&timestamp=");
+//            result.append(URLEncoder.encode(""+d.getTime(), "UTF-8"));
+            result.append(""+d.getTime());
+            result.append("&visitPoint=");
+//            result.append(URLEncoder.encode(visitPointId+"1234567890", "UTF-8"));
+            result.append(visitPointId);
+            urlConnection.setRequestProperty("Content-Length", ""+result.toString().length());
             DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
             wr.writeBytes(result.toString());
             wr.flush();
@@ -99,7 +89,7 @@ public class Messenger extends AsyncTask<URL, Integer, Long> {
                     "application/x-www-form-urlencoded");
             urlConnection.setRequestProperty("User-Agent", "diex");
             urlConnection.setUseCaches (false);
-            urlConnection.setChunkedStreamingMode(0);
+            urlConnection.setChunkedStreamingMode(255);
 
 
             Log.i(TAG, "url connection ok");
