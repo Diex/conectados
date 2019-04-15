@@ -20,8 +20,7 @@ public class VisitController {
     long timeSinceLastPointChanged = -1;
 
     int lookupTime = 3000;
-    final int MIN_TIME = 10;
-
+    final int MIN_TIME = 15;
 
 
     public VisitController(Activity a){
@@ -42,29 +41,10 @@ public class VisitController {
         };
 
         t.start();
-
-
-//        final Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                //Do something after 100ms
-//                for(VisitPoint visitPoint : installations){
-//                    if(visitPoint.getId().equals("game_0")) {
-//                       installations.remove(visitPoint);
-//                        oldest = installations.get(0);
-//                        return;
-//                    }
-//
-//                }
-//            }
-//        }, 10000);
-
     }
 
     public void setInstallationsToMonitor(ArrayList<VisitPoint> installations){
         this.installations = installations;
-//        oldest = installations.get(0);
     }
 
     VisitPoint preOldest;
@@ -73,12 +53,7 @@ public class VisitController {
     void inferAction(){
 
         System.out.println("------------- inferAction ---------");
-
-
-//        if(oldest != null) System.out.println("oldest: " + oldest.getId() + " oldest.persistenceTime: " + oldest.getPersistenceTime());
-
         ArrayList<VisitPoint> actives = new ArrayList<VisitPoint>();
-
 
         String acc = "";
         for(VisitPoint visitPoint : installations){
@@ -102,25 +77,18 @@ public class VisitController {
 
         // si no es el mismo en el que estaba ...
         if(preOldest == oldest) return;
-
         // lo cambio
         System.out.println("oldest changed to: \n" + oldest.toString());
-
         app.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 ((MainActivity) app).setCurrentItem(oldest);
             }
         });
-
         // y ahora es el nuevo preOldest
         preOldest = oldest;
 
     }
-
-//    public void onEnter(ProximityZoneContext s){
-//        updateVisitPoint(s);
-//    }
 
     public void onContextChanged(ArrayList<ProximityZoneContext> pzc){
         // TODO parsear las id vs los id en las installations
@@ -134,22 +102,6 @@ public class VisitController {
 
         }
 
-//        setPointsOff();
-//
-//        for (ProximityZoneContext zone : pzc){
-//            updateVisitPoint(zone);
-//        }
-
-
-        // updatear el tiempo de presencia en cada uno
-        // determinar cual es la locacion acutal
-        // si cambio...
-        // y si cambio cuanto tiempo hace que esta ahi parado y disparar un evento de cambio de pantalla
-
-
-    }
-    public void onExit(ProximityZoneContext pzc){
-
     }
 
     boolean visitPointIsInZone(VisitPoint visitPoint, ArrayList<ProximityZoneContext> pcz){
@@ -161,27 +113,4 @@ public class VisitController {
         }
         return false;
     }
-
-
-//    void setPointsOff(){
-//        for(VisitPoint vp : installations){
-//            vp.setIsOff();
-//        }
-//    }
-
-//    void updateVisitPoint(ProximityZoneContext s){
-//          VisitPoint inContext = findPoint(s);
-//          if(inContext != null && inContext.getId().equals(s.getAttachments().get("beaconId"))) inContext.setIsOn();
-//    }
-
-
-//    VisitPoint findPoint(ProximityZoneContext s){
-//        for(VisitPoint vp : installations){
-//            if(vp.getId().equals(s.getAttachments().get("beaconId"))){
-//                return vp;
-//            }
-//        }
-//        return null;
-//    }
-
 }

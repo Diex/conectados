@@ -1,5 +1,8 @@
 package com.diex.android.conectados;
 
+import android.content.Context;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +22,7 @@ import com.estimote.proximity_sdk.api.*;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
@@ -34,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements Visitable{
     ViewPager itemsViewer;
     ArrayList<VisitPoint> installations;
     VisitController visitController;
-
+    String uniqueID = UUID.randomUUID().toString();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements Visitable{
 
         final Messenger messenger = new Messenger(this);
         messenger.connectToServer();;
-        messenger.setSesion("xxxxxxxx");
+        messenger.setSesion(uniqueID);
         messenger.setGameId(vp.getId());
         messenger.execute();
 
@@ -124,24 +128,17 @@ public class MainActivity extends AppCompatActivity implements Visitable{
 
     @Override
     public void onEnterZone(ProximityZoneContext s){
-//        System.out.println(">>>>> ENTERING...: ");
-//        printContext(s);
-//        createVisitZone(s);
 
     }
 
 
     @Override
     public void onExitZone(ProximityZoneContext s){
-//        System.out.println("<<<< EXITING...: ");
-//        System.out.println(s);
-        updateCheckboxes();
     }
 
     @Override
     public void onContextChange(ArrayList<ProximityZoneContext> pzc){
         visitController.onContextChanged(pzc);
-//        updateCheckboxes();
     }
 
 
@@ -154,7 +151,6 @@ public class MainActivity extends AppCompatActivity implements Visitable{
     }
 
     public static int getResId(String resName, Class<?> c) {
-
         try {
             Field idField = c.getDeclaredField(resName);
             return idField.getInt(idField);
@@ -167,12 +163,6 @@ public class MainActivity extends AppCompatActivity implements Visitable{
 
     @Override
     public void onEnterCloseZone(ProximityZoneContext s){
-//        // si esta la zona (point) creado lo activo...
-//        String zoneId = s.getAttachments().get("beaconId");
-//        System.out.println("ESTOY REALMENTE CERCA...");
-//        if(installations.contains(zoneId)){
-//            System.out.println("habilito la zona: " +zoneId);
-//        };
     }
 
 
@@ -185,8 +175,6 @@ public class MainActivity extends AppCompatActivity implements Visitable{
         }
     }
 
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -198,7 +186,6 @@ public class MainActivity extends AppCompatActivity implements Visitable{
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
         return true;
     }
 
@@ -208,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements Visitable{
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_finish) {
             setCurrentItem(installations.get((int) (Math.random()*installations.size())));
             return true;

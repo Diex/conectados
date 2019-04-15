@@ -73,7 +73,7 @@ public class ProximityContentManager {
 
         ProximityZone closer = new ProximityZoneBuilder()
                 .forTag("game")
-                .inCustomRange(0.5)
+                .inCustomRange(1.0)
                 .onEnter(new Function1<ProximityZoneContext, Unit>() {
                     @Override
                     public Unit invoke(ProximityZoneContext context) {
@@ -118,7 +118,6 @@ public class ProximityContentManager {
                 .build();
 
         proximityObserverHandler = proximityObserver.startObserving(zone);
-//        proximityObserverHandler = proximityObserver.startObserving(closer);
     }
 
     public void stop() {

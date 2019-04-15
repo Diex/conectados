@@ -1,10 +1,7 @@
 package com.diex.android.conectados;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.widget.ImageView;
-import android.widget.TextView;
+
 
 import com.diex.android.conectados.estimote.VisitPoint;
 
