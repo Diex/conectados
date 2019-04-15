@@ -20,6 +20,7 @@ public class VisitController {
     long timeSinceLastPointChanged = -1;
 
     int lookupTime = 3000;
+    final int MIN_TIME = 10;
 
 
 
@@ -94,7 +95,7 @@ public class VisitController {
 
         oldest = actives.get(0);
         for(VisitPoint activePoint : actives){
-            if(activePoint.getPersistenceTime() < 5) continue; // no lo tengo en cuenta si paso menos de 5 segs
+            if(activePoint.getPersistenceTime() < MIN_TIME) continue; // no lo tengo en cuenta si paso menos de 5 segs
             oldest = oldest.getPersistenceTime() > activePoint.getPersistenceTime() ? oldest : activePoint;
         }
 

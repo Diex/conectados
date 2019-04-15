@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements Visitable{
         final Messenger messenger = new Messenger(this);
         messenger.connectToServer();;
         messenger.setSesion("xxxxxxxx");
-        messenger.setVisitPointId(vp.getId());
+        messenger.setGameId(vp.getId());
         messenger.execute();
 
     }
@@ -198,6 +198,7 @@ public class MainActivity extends AppCompatActivity implements Visitable{
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
@@ -209,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements Visitable{
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_finish) {
+            setCurrentItem(installations.get((int) (Math.random()*installations.size())));
             return true;
         }
 
