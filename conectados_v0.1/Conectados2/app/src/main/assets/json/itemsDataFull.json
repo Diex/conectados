@@ -1,0 +1,88 @@
+{
+  "items": [
+    {
+      "description": "Cuando hablamos de Big Data nos referimos a conjuntos de datos o combinaciones de conjuntos de datos cuyo tamaño (volumen), complejidad (variabilidad) y velocidad de crecimiento (velocidad) dificultan su captura, gestión, procesamiento o análisis mediante tecnologías y herramientas convencionales.",
+      "img": "drawable/dummy",
+      "tag": "game",
+      "gameId": "Big Data",
+      "beaconId": "game_1"
+    },
+    {
+      "description": "El espacio de juego es una mesa con una pantalla enmascarada en una mesa rectangular. Los participantes (chicos de 9 años en adelante) dispondrán de cartas  y una zona de activación, donde se apoyarán las cartas para jugar (detección por RFID). También contarán con otros elementos analógicos de comando como botoneras y perilla.\n El juego tiene como eje las tecnologías de las telecomunicaciones. Consiste en ir superando un conjunto de desafíos participando en equipo, donde el contrincante es el tiempo y la complejidad de cada desafío.  \nUna vez comenzado el juego se van sucediendo los distintos desafíos, en la medida que puedan vencer el desafío anterior. \n\nDesafíos: \n\n.Comunicación Morse \n.Comunicación de dos ciudades \n.Trivia en equipo \n.Time line \n.Encontrar el intruso",
+      "img": "drawable/dummy",
+      "tag": "game",
+      "gameId": "Comunicados",
+      "beaconId": "game_2"
+    },
+    {
+      "description": "Un hogar digital o casa inteligente no es sólo una cuestión de capricho o comodidad: es una cuestión de ahorro, de seguridad, de eficiencia energética y de calidad de vida, especialmente para las personas discapacitadas y las personas mayores, y más si viven solas. Es una cuestión de autonomía y suficiencia personal, un estilo de vida.",
+      "img": "drawable/dummy",
+      "tag": "game",
+      "gameId": "IOT. Casa Inteligente",
+      "beaconId": "game_3"
+    },
+    {
+      "description": "Instalación interactiva en la que el público puede recorrer un espacio sensible que va a representar el funcionamiento de las antenas. El piso se encuentra cubierto de hexágonos de diferentes tamaños que muestran gráficas generativas que responden en tiempo-real a las acciones del público, a su vez la escena se encuentra poblada de “clusters de antenas” (racimos de antenas) que interactúan con el piso y el público. Cuando las personas transitan en el espacio, fluyen comunicaciones desde sus posiciones hasta las de otros interactores. El flujo de comunicación (que puede ser representado de diferentes formas, por ejemplo: como texto moviéndose por el suelo) parte desde la posición de la persona y se dirige hasta la antena más cercana. El flujo viaja por el piso, atravesando el mosaico de hexágonos hasta alcanzar al hexágono debajo de la antena más cercana, entonces el flujo asciende por la antena y se transmite hasta las antenas que posean personas cerca, entonces baja por dichas antenas y se dirige hasta cada una de las otras personas. \n",
+      "img": "drawable/dummy",
+      "tag": "game",
+      "gameId": "Espectro",
+      "beaconId": "game_4"
+    },
+    {
+      "description": "La actividad tiene como objetivo que los visitantes de la muestra puedan experimentar en la construcción de estructuras de antenas para telecomunicaciones. La actividad es libre y puede realizarse sin un guía (habrá un instructivo digital). Los visitantes tendrán acceso a una de las superficies de trabajo. Cada una de ellas contiene las piezas para el armado de la estructura de una antena y el prototipo de la “Antena” para instalarlo una vez instalada la estructura. Las piezas de la estructura se vinculan mediante encastres lo que habilita a generar formas complejas. Al terminar de armar la estructura, se vinculará a la misma el prototipo de antena, que al estar encastrado encenderá led, simulando su conexión. \nPrototipo “Antena: Este componente será desarrollado plástico y contiene la electrónica . Serán de diferentes formatos según los modelos reales (circulares, rectangulares).\n",
+      "img": "drawable/dummy",
+      "tag": "game",
+      "gameId": "Antenas",
+      "beaconId": "game_5"
+    },
+    {
+      "description": "Instalación lúdica participativa para niños de 4/5 años en adelante. \nLos participantes deberán armar un circuito de comunicación entre un punto A y un punto B de la sala. Para ello unirán bloques (cubos) de colores con forma cúbica que tienen entradas y salidas para conectar cables de audio (tipo plug de colores), además tienen ruedas y permiten que los  los muevan libremente por la sala. Cada bloque representa una función en el circuito comunicativo. Haciendo la conexión de forma correcta los niños podrán hablar usando un tubo de teléfono en cada extremo de la instalación, caso contrario el sistema no funcionará y tendrán que revisar la conexión que hicieron. Las conexiones correctas entre cada uno de los cubos se indica al encenderse una luz. \nLa instalación permite que jueguen tanto un grupo de niños acompañados de algún adulto como contingentes de visitas guiadas.",
+      "img": "drawable/dummy",
+      "tag": "game",
+      "gameId": "Conexiones",
+      "beaconId": "game_6"
+    },
+    {
+      "description": "Videojuego cuyo objetivo es destacar y dar a conocer los diferentes tipos de comunicaciones que existen explicando de manera gráfica y sencilla las diferentes herramientas y tecnologías que intervienen. Podrán jugar de forma individual o hasta 4 jugadores, a través de tablets que estrán dispuetas en le instalación. Se podrá visualizar el progreso del juego en un Led. Los participantes deberán resolver diferentes misiones de forma colaborativa. Cada misión responderá a un objetivo distinto relacionado con las telecomunicaciones:\n  \n-Lograr una comunicación de telefonía móvil a otro móvil desde  Buenos Aires a Ushuaia. \n-Lograr una comunicación de telefonía móvil a otro móvil desde  Bariloche a Aconcagua.              \n-IPTV:   Movistar Play y Movistar TV \n-Navegación por internet.  \n- Subir video por redes.  \n-Juego multiplayer.  Fortnite.   \n-Mensajería instantánea. ",
+      "img": "drawable/dummy",
+      "tag": "game",
+      "gameId": "Enlaza2",
+      "beaconId": "game_7"
+    },
+    {
+      "description": "Utilizando unos Headsets de realidad virtual, invitamos al espectador\na ser testigo del area de cobertura de las antenas moviles ubicadas\nen diferentes lugares y alturas del pais.\n",
+      "img": "drawable/dummy",
+      "tag": "game",
+      "gameId": "Realidad Virtual",
+      "beaconId": "game_8"
+    },
+    {
+      "description": "En el video wall, usando una pantalla touch como interfase, podremos observar sobre el plano de la ciudad de buenos aires, datos referidos a la infreestructura de la telefonica fija y la telefonia movil. Tambien podremos visualizar la actividad de los clientes moviles ingresando a CABA",
+      "img": "drawable/dummy",
+      "tag": "game",
+      "gameId": "Video Wall",
+      "beaconId": "game_9"
+    },
+    {
+      "description": "Exposición de distintos objetos relacionados a la telefonía en general.\nEl usuario a traves de dos interfaces tactiles, podra visualizar en 3D\ncada objeto exhibido",
+      "img": "drawable/dummy",
+      "tag": "game",
+      "gameId": "Animaciones Digitales",
+      "beaconId": "game_10"
+    },
+    {
+      "description": "Exposición de distintos objetos relacionados a la telefonía en general. El usuario a traves de dos interfaces tactiles, podra visualizar en 3D cada objeto exhibido",
+      "img": "drawable/dummy",
+      "tag": "game",
+      "gameId": "Vitrina de objetos",
+      "beaconId": "game_11"
+    },
+    {
+      "description": "El usuario a traves de una interfase tactil, podra seleccionar las \ncombinaciones que le ofrece los 4 servicios de Telefonica: Telefonia\nHogareña, Telefonia Movil, Datos y IPTV.\nUtilizando la tecnologia del videomapping se animara una maqueta\nque representa un corte transversal de nuestra geografia que abarca\ndesde la salida internacional de las Cuevas en Mendoza, hasta la\nEstacion de amarre Las toninas",
+      "img": "drawable/dummy",
+      "tag": "game",
+      "gameId": "Maqueta interactiva",
+      "beaconId": "game_12"
+    }
+  ]
+}

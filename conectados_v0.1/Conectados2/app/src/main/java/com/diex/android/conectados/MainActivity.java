@@ -44,9 +44,6 @@ public class MainActivity extends AppCompatActivity implements Visitable{
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
 
-//        setSupportActionBar(toolbar);
-
-
 
 //        FloatingActionButton fab = findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -56,8 +53,6 @@ public class MainActivity extends AppCompatActivity implements Visitable{
 //                        .setAction("Action", null).show();
 //            }
 //        });
-
-
 
         // estimoe
 
@@ -87,24 +82,41 @@ public class MainActivity extends AppCompatActivity implements Visitable{
                             }
                         });
 
-        PointsBuilder pointsBuilder = new PointsBuilder(this, "json/itemsData.json");
+        PointsBuilder pointsBuilder = new PointsBuilder(this, "json/itemsDataFull.json");
         installations = pointsBuilder.getPointsList();
-//        for(VisitPoint vp : installations) System.out.println(vp.toString());
 
-        itemsViewer=(ViewPager)findViewById(R.id.itemsViewer);
+        itemsViewer = findViewById(R.id.itemsViewer);
         itemsViewer.setAdapter(new ItemsAdapter(this, installations));
 
         visitController = new VisitController(this);
         visitController.setInstallationsToMonitor(installations);
+
+
+//        messenger.connectToServer();
+
+    }
+
+    private void startProximityContentManager() {
+        proximityContentManager = new ProximityContentManager(this, cloudCredentials);
+        proximityContentManager.setOnEnter(this);
+        proximityContentManager.start();
 
     }
 
 
     public void setCurrentItem(VisitPoint vp){
         System.out.println("------- set current item: ---------");
-        System.out.println(vp);
+//        System.out.println(vp);
         System.out.println(installations.indexOf(vp));
+//        itemsViewer.getAdapter().notifyDataSetChanged();
         itemsViewer.setCurrentItem(installations.indexOf(vp));
+
+        final Messenger messenger = new Messenger(this);
+        messenger.connectToServer();;
+        messenger.setSesion("xxxxxxxx");
+        messenger.setVisitiPointId(vp.getId());
+        messenger.execute();
+
     }
 
 
@@ -112,38 +124,32 @@ public class MainActivity extends AppCompatActivity implements Visitable{
 
     @Override
     public void onEnterZone(ProximityZoneContext s){
-        System.out.println(">>>>> ENTERING...: ");
-        printContext(s);
-        createVisitZone(s);
+//        System.out.println(">>>>> ENTERING...: ");
+//        printContext(s);
+//        createVisitZone(s);
 
     }
 
-    void createVisitZone(ProximityZoneContext s){
-//        String zoneId = s.getAttachments().get("beaconId");
-//        if(visitPointsNames.contains(zoneId)){
-//            visitPointsNames.remove(visitPointsNames.indexOf(zoneId));
-//            installations.add(new VisitPoint());
-//            System.out.println("xxxx creo la zona...: " + zoneId);
-//        }
-    }
 
     @Override
     public void onExitZone(ProximityZoneContext s){
 //        System.out.println("<<<< EXITING...: ");
 //        System.out.println(s);
+        updateCheckboxes();
     }
 
     @Override
     public void onContextChange(ArrayList<ProximityZoneContext> pzc){
         visitController.onContextChanged(pzc);
-        updateCheckboxes();
+//        updateCheckboxes();
     }
+
 
     private void updateCheckboxes(){
         for(VisitPoint point : installations){
             if(point.getId().equals("game_0")) continue;
             CheckBox checkBox = (CheckBox) findViewById(getResId(point.getId(), R.id.class));
-            checkBox.setChecked(point.status());
+            checkBox.setChecked(point.isActive());
         }
     }
 
@@ -159,38 +165,27 @@ public class MainActivity extends AppCompatActivity implements Visitable{
     }
 
 
-
-
-
-
-
     @Override
     public void onEnterCloseZone(ProximityZoneContext s){
-        // si esta la zona (point) creado lo activo...
-        String zoneId = s.getAttachments().get("beaconId");
-        System.out.println("ESTOY REALMENTE CERCA...");
-        if(installations.contains(zoneId)){
-            System.out.println("habilito la zona: " +zoneId);
-        };
+//        // si esta la zona (point) creado lo activo...
+//        String zoneId = s.getAttachments().get("beaconId");
+//        System.out.println("ESTOY REALMENTE CERCA...");
+//        if(installations.contains(zoneId)){
+//            System.out.println("habilito la zona: " +zoneId);
+//        };
     }
 
 
 
     private void printContext(ProximityZoneContext context){
-
-
         for (String name: context.getAttachments().keySet()){
             String key = name.toString();
             String value = context.getAttachments().get(name).toString();
             System.out.println(key + " " + value);
         }
     }
-    private void startProximityContentManager() {
-        proximityContentManager = new ProximityContentManager(this, cloudCredentials);
-        proximityContentManager.setOnEnter(this);
-        proximityContentManager.start();
 
-    }
+
 
     @Override
     protected void onDestroy() {

@@ -1,11 +1,11 @@
 {
   "items": [
     {
-      "description": "Te damos la bienvenida al espacio fundacion telefonica. Esperamos que disfrutes la visita",
+      "description": "Cuando hablamos de Big Data nos referimos a conjuntos de datos o combinaciones de conjuntos de datos cuyo tamaño (volumen), complejidad (variabilidad) y velocidad de crecimiento (velocidad) dificultan su captura, gestión, procesamiento o análisis mediante tecnologías y herramientas convencionales.",
       "img": "drawable/dummy",
       "tag": "game",
-      "gameId": "Bienvenidos",
-      "beaconId": "game_0"
+      "gameId": "Big Data",
+      "beaconId": "game_1"
     },
     {
       "description": "El espacio de juego es una mesa con una pantalla enmascarada en una mesa rectangular. Los participantes (chicos de 9 años en adelante) dispondrán de cartas  y una zona de activación, donde se apoyarán las cartas para jugar (detección por RFID). También contarán con otros elementos analógicos de comando como botoneras y perilla.\n El juego tiene como eje las tecnologías de las telecomunicaciones. Consiste en ir superando un conjunto de desafíos participando en equipo, donde el contrincante es el tiempo y la complejidad de cada desafío.  \nUna vez comenzado el juego se van sucediendo los distintos desafíos, en la medida que puedan vencer el desafío anterior. \n\nDesafíos: \n\n.Comunicación Morse \n.Comunicación de dos ciudades \n.Trivia en equipo \n.Time line \n.Encontrar el intruso",
@@ -13,13 +13,6 @@
       "tag": "game",
       "gameId": "Comunicados",
       "beaconId": "game_2"
-    },
-    {
-      "description": "Cuando hablamos de Big Data nos referimos a conjuntos de datos o combinaciones de conjuntos de datos cuyo tamaño (volumen), complejidad (variabilidad) y velocidad de crecimiento (velocidad) dificultan su captura, gestión, procesamiento o análisis mediante tecnologías y herramientas convencionales.",
-      "img": "drawable/dummy",
-      "tag": "game",
-      "gameId": "Big Data",
-      "beaconId": "game_1"
     },
     {
       "description": "Un hogar digital o casa inteligente no es sólo una cuestión de capricho o comodidad: es una cuestión de ahorro, de seguridad, de eficiencia energética y de calidad de vida, especialmente para las personas discapacitadas y las personas mayores, y más si viven solas. Es una cuestión de autonomía y suficiencia personal, un estilo de vida.",

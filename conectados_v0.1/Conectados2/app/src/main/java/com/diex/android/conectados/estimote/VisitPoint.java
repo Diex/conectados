@@ -22,7 +22,7 @@ public class VisitPoint {
     private boolean status = false;
 
     public VisitPoint(){
-
+        setEnterTime();
     }
 
     public void isClose(){
@@ -90,7 +90,7 @@ public class VisitPoint {
         status = false;
     }
 
-    public boolean status(){
+    public boolean isActive(){
         return this.status;
     }
 

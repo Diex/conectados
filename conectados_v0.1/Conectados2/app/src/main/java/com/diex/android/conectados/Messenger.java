@@ -8,12 +8,18 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 public class Messenger extends AsyncTask<URL, Integer, Long> {
 
@@ -26,32 +32,42 @@ public class Messenger extends AsyncTask<URL, Integer, Long> {
         this.context = context;
     }
 
+
+    String sesion = "";
+    String visitiPointId = "";
+
+    public void setSesion(String sesion) {
+        this.sesion = sesion;
+    }
+
+    public void setVisitiPointId(String visitiPointId) {
+        this.visitiPointId = visitiPointId;
+    }
+
     protected Long doInBackground(URL... urls) {
         HashMap data = new HashMap();
 
-        data.put("fname", "vinod");
-        data.put("fphone", "1234567890");
-        data.put("femail", "abc@gmail.com");
-        data.put("fcomment", "Help");
+        data.put("session", sesion);
+        Date d = new Date();
+        data.put("timestamp", ""+ d.getTime());
+        data.put("visitPoint", visitiPointId);
+
 
         try {
 
-            OutputStreamWriter wr = new OutputStreamWriter(urlConnection.getOutputStream());
-            JSONObject jso = new JSONObject(data);
-            wr.write( jso.toString());
+            StringBuilder result = new StringBuilder();
+            result.append("session="+sesion);
+
+//            OutputStream os = urlConnection.getOutputStream();
+//
+//            os.write();
+
+            DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
+            wr.writeBytes(result.toString());
             wr.flush();
-            Log.i(TAG, jso.toString());
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            Log.i(TAG, "response...");
-            byte[] contents = new byte[1024];
+            wr.close();
 
-            int bytesRead = 0;
-            String strFileContents = "";
-            while((bytesRead = in.read(contents)) != -1) {
-                strFileContents += new String(contents, 0, bytesRead);
-            }
-
-            Log.i(TAG, strFileContents);
+            Log.i(TAG, result.toString());
 
         }catch (Exception e){
             Log.i(TAG, e.toString());
@@ -77,7 +93,13 @@ public class Messenger extends AsyncTask<URL, Integer, Long> {
             serverAddres = new URL("http://192.168.0.7:8000");
             urlConnection = (HttpURLConnection) serverAddres.openConnection();
             urlConnection.setDoOutput(true);
-//            urlConnection.setRequestMethod();
+            urlConnection.setDoInput(true);
+            urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestProperty("Content-Type",
+                    "application/x-www-form-urlencoded");
+            urlConnection.setRequestProperty("User-Agent", "diex");
+            urlConnection.setUseCaches (false);
+            urlConnection.setChunkedStreamingMode(0);
 
 
             Log.i(TAG, "url connection ok");
@@ -87,9 +109,10 @@ public class Messenger extends AsyncTask<URL, Integer, Long> {
         }
     }
 
-    public void postRequest(){
-       doInBackground();
-    }
+
+//    public void postRequest(){
+//        doInBackground();
+//    }
 
 
 }

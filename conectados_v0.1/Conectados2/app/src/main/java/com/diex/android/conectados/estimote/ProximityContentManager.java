@@ -49,6 +49,8 @@ public class ProximityContentManager {
                 .onError(new Function1<Throwable, Unit>() {
                     @Override
                     public Unit invoke(Throwable throwable) {
+
+
                         Log.e("app", "proximity observer error: " + throwable);
 
                         Toast toast = Toast.makeText(ctx, "Reinicie Blutooth...", Toast.LENGTH_SHORT);
@@ -83,7 +85,7 @@ public class ProximityContentManager {
 
         ProximityZone zone = new ProximityZoneBuilder()
                 .forTag("game")
-                .inCustomRange(2.0)
+                .inCustomRange(1.0)
                 .onContextChange(new Function1<Set<? extends ProximityZoneContext>, Unit>() {
                     @Override
                     //The type with only one value: the Unit object. This type corresponds to the void type in Java.
@@ -92,7 +94,7 @@ public class ProximityContentManager {
                         ArrayList<ProximityZoneContext> data = new ArrayList<ProximityZoneContext>();
                         for (ProximityZoneContext proximityContext : contexts) {
                           data.add(proximityContext);
-                          System.out.println(proximityContext.toString());
+//                          System.out.println(proximityContext.toString());
                         }
                         visitable.onContextChange(data);
                         return null;

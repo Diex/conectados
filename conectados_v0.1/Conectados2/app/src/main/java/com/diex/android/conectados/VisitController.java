@@ -1,6 +1,7 @@
 package com.diex.android.conectados;
 
 import android.app.Activity;
+import android.os.Handler;
 
 import com.diex.android.conectados.estimote.VisitPoint;
 import com.estimote.proximity_sdk.api.ProximityZoneContext;
@@ -20,7 +21,6 @@ public class VisitController {
 
     int lookupTime = 3000;
 
-    VisitPoint oldest;
 
 
     public VisitController(Activity a){
@@ -42,35 +42,73 @@ public class VisitController {
 
         t.start();
 
+
+//        final Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                //Do something after 100ms
+//                for(VisitPoint visitPoint : installations){
+//                    if(visitPoint.getId().equals("game_0")) {
+//                       installations.remove(visitPoint);
+//                        oldest = installations.get(0);
+//                        return;
+//                    }
+//
+//                }
+//            }
+//        }, 10000);
+
     }
 
     public void setInstallationsToMonitor(ArrayList<VisitPoint> installations){
         this.installations = installations;
-        oldest = installations.get(0);
+//        oldest = installations.get(0);
     }
+
+    VisitPoint preOldest;
+    VisitPoint oldest;
 
     void inferAction(){
 
-        // HACK
-        if(oldest.getId().equals("game_0")) return;
-
         System.out.println("------------- inferAction ---------");
 
-        VisitPoint preOldest = oldest;
+
+//        if(oldest != null) System.out.println("oldest: " + oldest.getId() + " oldest.persistenceTime: " + oldest.getPersistenceTime());
+
+        ArrayList<VisitPoint> actives = new ArrayList<VisitPoint>();
+
+
 
         for(VisitPoint visitPoint : installations){
-            oldest = oldest.getPersistenceTime() > visitPoint.getPersistenceTime() ? oldest : visitPoint;
+            if(!visitPoint.isActive()) continue;
+            actives.add(visitPoint);
         }
 
-        if(preOldest == oldest) return; // no hago nada porque sigue siendo el mismo
+        if(actives.size() < 1) return;
 
+        oldest = actives.get(0);
+        for(VisitPoint activePoint : actives){
+            if(activePoint.getPersistenceTime() < 5) continue; // no lo tengo en cuenta si paso menos de 5 segs
+            oldest = oldest.getPersistenceTime() > activePoint.getPersistenceTime() ? oldest : activePoint;
+        }
+
+
+        // si no es el mismo en el que estaba ...
+        if(preOldest == oldest) return;
+
+        // lo cambio
         System.out.println("oldest changed to: \n" + oldest.toString());
+
         app.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 ((MainActivity) app).setCurrentItem(oldest);
             }
         });
+
+        // y ahora es el nuevo preOldest
+        preOldest = oldest;
 
     }
 
@@ -104,16 +142,17 @@ public class VisitController {
 
 
     }
+    public void onExit(ProximityZoneContext pzc){
+
+    }
 
     boolean visitPointIsInZone(VisitPoint visitPoint, ArrayList<ProximityZoneContext> pcz){
         String id = visitPoint.getId();
-
         for(ProximityZoneContext zone : pcz){
             if(zone.getAttachments().get("beaconId").equals(id)){
                 return true; // early return??
             }
         }
-
         return false;
     }
 
