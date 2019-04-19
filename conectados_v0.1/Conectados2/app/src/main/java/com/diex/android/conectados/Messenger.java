@@ -21,14 +21,17 @@ import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.crypto.Mac;
+
 public class Messenger extends AsyncTask<URL, Integer, Long> {
 
     private URL serverAddres;
     private HttpURLConnection urlConnection;
     private String TAG = "SendDataToServer";
     private Context context;
-    private final String URL = "http://192.168.0.251:8000";
-
+    private final String URL = "http://192.168.1.36:8000";
+    // TODO esto no sirve por la busca en 8.8.8.8
+//    private final String URL = "http://sulkys-Mac-pro.local/8000";
     public Messenger(Context context){
         this.context = context;
     }

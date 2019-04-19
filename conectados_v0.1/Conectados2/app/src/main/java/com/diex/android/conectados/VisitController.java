@@ -20,7 +20,7 @@ public class VisitController {
     long timeSinceLastPointChanged = -1;
 
     int lookupTime = 3000;
-    final int MIN_TIME = 15;
+    final int MIN_TIME = 20;
 
 
     public VisitController(Activity a){
@@ -77,8 +77,9 @@ public class VisitController {
 
         // si no es el mismo en el que estaba ...
         if(preOldest == oldest) return;
-        // lo cambio
+
         System.out.println("oldest changed to: \n" + oldest.toString());
+
         app.runOnUiThread(new Runnable() {
             @Override
             public void run() {

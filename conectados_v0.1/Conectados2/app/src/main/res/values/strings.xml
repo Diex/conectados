@@ -1,4 +1,11 @@
 <resources>
-    <string name="app_name">Conectados</string>
+    <string name="app_name">ConectadXs</string>
     <string name="action_finish">Finalizar visita</string>
+
+    <string name="form_name">¿Cuál es tu nombre?</string>
+    <string name="form_location">¿Localidad?</string>
+    <string name="form_email">¿Tu email de contácto?</string>
+    <string name="form_submit">CONTINUAR</string>
+    <string name="form_clear">BORRAR</string>
+
 </resources>

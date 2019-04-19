@@ -1,6 +1,8 @@
 package com.diex.android.conectados;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -42,24 +44,20 @@ public class MainActivity extends AppCompatActivity implements Visitable{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Intent intent = new Intent(this, VisitorForm.class);
+        startActivity(intent);
 
 
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
-        // estimoe
 
+    }
+
+    private void estimoteSetup(){
+        // estimote
         RequirementsWizardFactory
                 .createEstimoteRequirementsWizard()
                 .fulfillRequirements(this,
@@ -91,32 +89,29 @@ public class MainActivity extends AppCompatActivity implements Visitable{
 
         itemsViewer = findViewById(R.id.itemsViewer);
         itemsViewer.setAdapter(new ItemsAdapter(this, installations));
-
         visitController = new VisitController(this);
         visitController.setInstallationsToMonitor(installations);
-
-
-//        messenger.connectToServer();
-
     }
 
     private void startProximityContentManager() {
         proximityContentManager = new ProximityContentManager(this, cloudCredentials);
         proximityContentManager.setOnEnter(this);
-        proximityContentManager.start();
+
+        // TODO HACK solo cuando estoy en modo sala
+       // proximityContentManager.start();
 
     }
 
 
     public void setCurrentItem(VisitPoint vp){
         System.out.println("------- set current item: ---------");
-//        System.out.println(vp);
         System.out.println(installations.indexOf(vp));
-//        itemsViewer.getAdapter().notifyDataSetChanged();
         itemsViewer.setCurrentItem(installations.indexOf(vp));
 
+
+        if(vp.wasVisited()) return;
+        vp.setWasVisited();
         final Messenger messenger = new Messenger(this);
-        messenger.connectToServer();;
         messenger.setSesion(uniqueID);
         messenger.setGameId(vp.getId());
         messenger.execute();
@@ -131,14 +126,13 @@ public class MainActivity extends AppCompatActivity implements Visitable{
 
     }
 
-
     @Override
     public void onExitZone(ProximityZoneContext s){
     }
 
     @Override
     public void onContextChange(ArrayList<ProximityZoneContext> pzc){
-        visitController.onContextChanged(pzc);
+        if(visitController != null) visitController.onContextChanged(pzc);
     }
 
 
@@ -185,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements Visitable{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+       // getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

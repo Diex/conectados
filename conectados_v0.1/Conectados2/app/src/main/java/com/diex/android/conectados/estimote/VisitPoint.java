@@ -19,6 +19,7 @@ public class VisitPoint {
     private String description;
     private String img;
 
+    private boolean wasVisited = false;
     private boolean status = false;
 
     public VisitPoint(){
@@ -84,6 +85,14 @@ public class VisitPoint {
         if(status) return; // si ya estoy on, sigo de largo
         setEnterTime();
         status = true;
+    }
+
+    public void setWasVisited(){
+        wasVisited = true;
+    }
+
+    public boolean wasVisited(){
+        return wasVisited;
     }
 
     public void setIsOff(){
