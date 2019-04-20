@@ -1,10 +1,6 @@
 package com.diex.android.conectados;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +9,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
-import android.widget.Toolbar;
 
 import com.diex.android.conectados.estimote.ProximityContentManager;
 import com.diex.android.conectados.estimote.VisitPoint;
@@ -40,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements Visitable{
     ViewPager itemsViewer;
     ArrayList<VisitPoint> installations;
     VisitController visitController;
-    String uniqueID = UUID.randomUUID().toString();
+    public final static String uniqueID = UUID.randomUUID().toString();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +44,11 @@ public class MainActivity extends AppCompatActivity implements Visitable{
         super.onCreate(savedInstanceState);
 
         Intent intent = new Intent(this, VisitorForm.class);
-        startActivity(intent);
-
-
-
+        startActivityForResult(intent, 1);
 
     }
 
-    private void estimoteSetup(){
+    public void estimoteSetup(){
         // estimote
         RequirementsWizardFactory
                 .createEstimoteRequirementsWizard()
@@ -96,9 +88,7 @@ public class MainActivity extends AppCompatActivity implements Visitable{
     private void startProximityContentManager() {
         proximityContentManager = new ProximityContentManager(this, cloudCredentials);
         proximityContentManager.setOnEnter(this);
-
-        // TODO HACK solo cuando estoy en modo sala
-       // proximityContentManager.start();
+        proximityContentManager.start();
 
     }
 
@@ -111,10 +101,10 @@ public class MainActivity extends AppCompatActivity implements Visitable{
 
         if(vp.wasVisited()) return;
         vp.setWasVisited();
-        final Messenger messenger = new Messenger(this);
-        messenger.setSesion(uniqueID);
-        messenger.setGameId(vp.getId());
-        messenger.execute();
+        final PostVisit postVisit = new PostVisit(this);
+        postVisit.setSesion(uniqueID);
+        postVisit.setGameId(vp.getId());
+        postVisit.execute();
 
     }
 
@@ -196,5 +186,19 @@ public class MainActivity extends AppCompatActivity implements Visitable{
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // Call Back method  to get the Message form other Activity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        if(requestCode==1)
+        {
+            setContentView(R.layout.activity_main);
+            estimoteSetup();
+            //do the things u wanted
+        }
     }
 }

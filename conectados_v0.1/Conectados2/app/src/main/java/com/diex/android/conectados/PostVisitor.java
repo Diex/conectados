@@ -2,9 +2,6 @@ package com.diex.android.conectados;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Build;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,48 +15,66 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Date;
 import java.util.HashMap;
 
-import javax.crypto.Mac;
 
-public class Messenger extends AsyncTask<URL, Integer, Long> {
+
+
+public class PostVisitor extends AsyncTask<URL, Integer, Long> {
 
     private URL serverAddres;
     private HttpURLConnection urlConnection;
     private String TAG = "SendDataToServer";
     private Context context;
-    private final String URL = "http://192.168.1.36:8000";
+    private final String URL = "http://192.168.0.7:8000";
     // TODO esto no sirve por la busca en 8.8.8.8
-//    private final String URL = "http://sulkys-Mac-pro.local/8000";
-    public Messenger(Context context){
+    //private final String URL = "http://sulkys-Mac-pro.local/8000";
+
+    public PostVisitor(Context context){
         this.context = context;
     }
 
-
     String sesion = "";
-    String gameId = "";
-    HttpURLConnection conn;
+    String name = "";
+    String loc = "";
+    String email = "";
 
     public void setSesion(String sesion) {
         this.sesion = sesion;
     }
 
-    public void setGameId(String gameId) {
-        this.gameId = gameId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    protected Long doInBackground(URL... urls) {
+    public void setLoc(String loc) {
+        this.loc = loc;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
+    HttpURLConnection conn;
+
+
+    protected Long doInBackground(java.net.URL... urls) {
 
 
         StringBuilder sbParams = new StringBuilder();
         HashMap<String, String> params;
 
         params = new HashMap<>();
-        Date d = new Date();
-        params.put("timestamp",  Long.toString(d.getTime()));
-        params.put("session", sesion);
-        params.put("gameId", gameId);
+
+
+
+            params.put("message", "visitor");
+            params.put("session", sesion);
+            params.put("name",  name);
+            params.put("location", loc);
+            params.put("email", email);
+
 
 
         int i = 0;
@@ -134,15 +149,20 @@ public class Messenger extends AsyncTask<URL, Integer, Long> {
     }
 
     protected void onPostExecute(Long result) {
-        Toast.makeText(context, "Estás visitando...", Toast.LENGTH_SHORT).show();
-        Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            v.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
-        } else {
-            //deprecated in API 26
-            v.vibrate(50);
-        }
+        Toast.makeText(context, "Gracias por tu información...", Toast.LENGTH_SHORT).show();
+//        Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            v.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
+//        } else {
+//            //deprecated in API 26
+//            v.vibrate(50);
+//        }
     }
+
+
+
+
+
 
 
 

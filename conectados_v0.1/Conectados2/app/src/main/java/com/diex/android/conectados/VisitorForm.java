@@ -1,20 +1,16 @@
 package com.diex.android.conectados;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toolbar;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 
 public class VisitorForm extends AppCompatActivity implements View.OnFocusChangeListener, View.OnClickListener {
 
@@ -30,7 +26,9 @@ public class VisitorForm extends AppCompatActivity implements View.OnFocusChange
         super.onCreate(savedInstanceState);
         // muestro primero el formulario
         setContentView(R.layout.activity_form);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+
+
 
         merloBold = Typeface.createFromAsset(getApplicationContext().getAssets(),
                 "fonts/merloneueround_bolditalic.otf");
@@ -47,53 +45,101 @@ public class VisitorForm extends AppCompatActivity implements View.OnFocusChange
     TextView name;
     TextView localidad;
     TextView email;
+    Button submit;
 
     void beautyfyForm(){
 
-        final ArrayList<TextView> fields = new ArrayList<TextView>();
 
         name = findViewById(R.id.name);
         name.setTypeface(merloLight);
 
-        fields.add(name);
 
         localidad = findViewById(R.id.location);
         localidad.setTypeface(merloLight);
 
-        fields.add(localidad);
-
         email = findViewById(R.id.email);
         email.setTypeface(merloLight);
 
-        fields.add(email);
 
-
-        Button submit = findViewById(R.id.submit);
+        submit = findViewById(R.id.submit);
         submit.setTypeface(merloBold);
         submit.requestFocus(); // cambio el foco aca y despues agrego los callbacks
 
+
         Button clear = findViewById(R.id.clear);
         clear.setTypeface(merloBold);
+
+
+        Button noinfo = findViewById(R.id.noinfo);
+        noinfo.setTypeface(merloBold);
+
 
         name.setOnFocusChangeListener(this);
         localidad.setOnFocusChangeListener(this);
         email.setOnFocusChangeListener(this);
 
 
+        submit.setOnClickListener(this);
         clear.setOnClickListener(this);
+        noinfo.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
-        name.setText(R.string.form_name);
-        localidad.setText(R.string.form_location);
-        email.setText(R.string.form_email);
 
-        // le agrego de nuevo los listeners...
-        name.setOnFocusChangeListener(this);
-        localidad.setOnFocusChangeListener(this);
-        email.setOnFocusChangeListener(this);
+        if(v.getId() == R.id.submit){
+
+            final PostVisitor postVisitor = new PostVisitor(this);
+
+            postVisitor.setSesion(MainActivity.uniqueID);
+            postVisitor.setName(name.getText().toString());
+            postVisitor.setLoc(localidad.getText().toString());
+            postVisitor.setEmail(email.getText().toString());
+
+            postVisitor.execute();
+
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+
+            setResult(1);
+            this.finish();
+
+
+
+        }else if(v.getId() == R.id.noinfo){
+
+            final PostVisitor postVisitor = new PostVisitor(this);
+
+            postVisitor.setSesion(MainActivity.uniqueID);
+            postVisitor.setName("anonymous user");
+            postVisitor.setLoc("-");
+            postVisitor.setEmail("-");
+
+            postVisitor.execute();
+
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+            setResult(1);
+            this.finish();
+
+
+        }else{
+
+            submit.requestFocus(); // cambio el foco aca y despues agrego los callbacks
+            // le agrego de nuevo los listeners...
+            name.setOnFocusChangeListener(this);
+            localidad.setOnFocusChangeListener(this);
+            email.setOnFocusChangeListener(this);
+
+            name.setText(R.string.form_name);
+            localidad.setText(R.string.form_location);
+            email.setText(R.string.form_email);
+        }
+
+
 
     }
 
@@ -102,6 +148,7 @@ public class VisitorForm extends AppCompatActivity implements View.OnFocusChange
         ((TextView) v).setText("");
         ((TextView) v).setOnFocusChangeListener(null);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

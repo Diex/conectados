@@ -4,35 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/form"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+    android:layout_height="match_parent">
 
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="0dp"
-        android:background="@color/colorWilli_Blue"
-        android:popupTheme="@style/AppTheme.PopupOverlay"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="-5dp"
         android:background="@color/colorPrimaryDark"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="vertical"
         android:padding="0dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toTopOf="parent">
 
         <!--Put form controls here-->
 
@@ -68,6 +56,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/form_submit" />
+        <Button
+            android:id="@+id/noinfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/form_noinfo" />
 
         <Button
             android:id="@+id/clear"
