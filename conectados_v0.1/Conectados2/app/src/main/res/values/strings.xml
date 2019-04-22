@@ -1,4 +1,5 @@
 <resources>
+    <string name="server_url">http://192.168.0.7:8000</string>
     <string name="app_name">ConectadXs</string>
     <string name="action_finish">Finalizar visita</string>
 
@@ -8,4 +9,14 @@
     <string name="form_submit">CONTINUAR</string>
     <string name="form_clear">BORRAR</string>
     <string name="form_noinfo">PREFIERO NO CONTESTAR</string>
+    <string name="form_age_prompt">¿Cuál es tu edad?</string>
+
+    <string-array name="form_ages">
+        <item>¿Cuál es tu edad?</item>
+        <item>  0 a 13</item>
+        <item>  13 a 18</item>
+        <item>  18 a 30</item>
+        <item>  30 a 60</item>
+        <item>  Mayor de 60</item>
+    </string-array>
 </resources>

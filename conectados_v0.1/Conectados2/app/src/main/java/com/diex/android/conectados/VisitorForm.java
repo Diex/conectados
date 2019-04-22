@@ -8,15 +8,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class VisitorForm extends AppCompatActivity implements View.OnFocusChangeListener, View.OnClickListener {
 
 
-    Typeface merloBold;
-    Typeface merloLight;
+    public static Typeface merloBold;
+    public static Typeface merloLight;
 
 
     @Override
@@ -41,13 +48,20 @@ public class VisitorForm extends AppCompatActivity implements View.OnFocusChange
 
     }
 
-
+    Spinner ages;
     TextView name;
     TextView localidad;
     TextView email;
     Button submit;
 
     void beautyfyForm(){
+        MySpinnerAdapter adapter = new MySpinnerAdapter(
+                this,
+                R.layout.spinner_item,
+                Arrays.asList(getResources().getStringArray(R.array.form_ages))
+        );
+        ages = findViewById(R.id.age);
+        ages.setAdapter(adapter);
 
 
         name = findViewById(R.id.name);
@@ -94,6 +108,7 @@ public class VisitorForm extends AppCompatActivity implements View.OnFocusChange
 
             postVisitor.setSesion(MainActivity.uniqueID);
             postVisitor.setName(name.getText().toString());
+            postVisitor.setAge(""+ages.getSelectedItemPosition());
             postVisitor.setLoc(localidad.getText().toString());
             postVisitor.setEmail(email.getText().toString());
 
@@ -168,5 +183,30 @@ public class VisitorForm extends AppCompatActivity implements View.OnFocusChange
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public static class MySpinnerAdapter extends ArrayAdapter<String> {
+        // (In reality I used a manager which caches the Typeface objects)
+        // Typeface font = FontManager.getInstance().getFont(getContext(), BLAMBOT);
+
+        private MySpinnerAdapter(Context context, int resource, List<String> items) {
+            super(context, resource, items);
+        }
+
+        // Affects default (closed) state of the spinner
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView view = (TextView) super.getView(position, convertView, parent);
+            view.setTypeface(VisitorForm.merloLight);
+            return view;
+        }
+
+        // Affects opened state of the spinner
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            TextView view = (TextView) super.getDropDownView(position, convertView, parent);
+            view.setTypeface(VisitorForm.merloLight);
+            return view;
+        }
     }
 }

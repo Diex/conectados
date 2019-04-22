@@ -31,7 +31,18 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:text="@string/form_name"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textColorLink="@color/colorWilli_Blue" />
+
+        <Spinner
+            android:id="@+id/age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:entries="@array/form_ages"
+            android:textColor="@android:color/white"
+            />
+
 
         <EditText
             android:id="@+id/location"
@@ -40,7 +51,8 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:text="@string/form_location"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textColorLink="@color/colorWilli_Blue" />
 
         <EditText
             android:id="@+id/email"
@@ -49,7 +61,8 @@
             android:ems="10"
             android:inputType="textEmailAddress"
             android:text="@string/form_email"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textColorLink="@color/colorWilli_Blue" />
 
         <Button
             android:id="@+id/submit"

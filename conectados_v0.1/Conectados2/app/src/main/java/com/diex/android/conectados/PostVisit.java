@@ -29,11 +29,12 @@ public class PostVisit extends AsyncTask<URL, Integer, Long> {
     private HttpURLConnection urlConnection;
     private String TAG = "SendDataToServer";
     private Context context;
-    private final String URL = "http://192.168.1.36:8000";
+    private final String URL;
     // TODO esto no sirve por la busca en 8.8.8.8
 //    private final String URL = "http://sulkys-Mac-pro.local/8000";
     public PostVisit(Context context){
         this.context = context;
+        URL = context.getString(R.string.server_url);
     }
 
 
@@ -57,6 +58,7 @@ public class PostVisit extends AsyncTask<URL, Integer, Long> {
 
         params = new HashMap<>();
         Date d = new Date();
+        params.put("message",  "visit");
         params.put("timestamp",  Long.toString(d.getTime()));
         params.put("session", sesion);
         params.put("gameId", gameId);
@@ -113,19 +115,21 @@ public class PostVisit extends AsyncTask<URL, Integer, Long> {
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
             StringBuilder result = new StringBuilder();
             String line;
+
             while ((line = reader.readLine()) != null) {
                 result.append(line);
             }
 
-            Log.d("test", "result from server: " + result.toString());
+            Log.d("PostVisit:", "result from server: " + result.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
+        }finally {
             if (conn != null) {
-                conn.disconnect();
+                conn.disconnect(); // cierro la conexión despues de recibir la respuesta
             }
         }
+
         return 0L;
     }
 
