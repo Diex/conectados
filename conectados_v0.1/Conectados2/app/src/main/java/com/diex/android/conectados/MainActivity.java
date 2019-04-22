@@ -102,10 +102,16 @@ public class MainActivity extends AppCompatActivity implements Visitable{
 
         if(vp.wasVisited()) return;
         vp.setWasVisited();
-        final PostVisit postVisit = new PostVisit(this);
+
+//        final PostVisit postVisit = new PostVisit(this);
+//        postVisit.setSesion(uniqueID);
+//        postVisit.setGameId(vp.getId());
+//        postVisit.execute();
+
+        final Postino postVisit = new Postino(this);
         postVisit.setSesion(uniqueID);
         postVisit.setGameId(vp.getId());
-        postVisit.execute();
+        postVisit.setMessageType(Postino.VISIT);
 
     }
 

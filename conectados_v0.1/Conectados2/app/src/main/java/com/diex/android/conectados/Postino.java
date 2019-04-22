@@ -15,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -32,7 +33,9 @@ public class Postino extends AsyncTask<URL, Integer, Long> {
 
     HashMap<String, String> params;
 
-
+    public static final String VISITOR = "visitor";
+    public static final String VISIT = "visit";
+    public static final String VISIT_END = "visitEnd";
     public Postino(Context context){
         this.context = context;
         URL = context.getString(R.string.server_url);
@@ -44,6 +47,8 @@ public class Postino extends AsyncTask<URL, Integer, Long> {
     String loc = "";
     String email = "";
     String age = "";
+    String gameId = "";
+    String type = "";
 
     public void setSesion(String sesion) {
         this.sesion = sesion;
@@ -65,22 +70,47 @@ public class Postino extends AsyncTask<URL, Integer, Long> {
         this.age = age;
     }
 
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
+    }
+
     HttpURLConnection conn;
 
 
+    public void setMessageType(String type){
+        this.type = type;
+
+        switch (type){
+            case VISITOR:
+                params.put("message", "visitor");
+                params.put("session", sesion);
+                params.put("name",  name);
+                params.put("age", age);
+                params.put("location", loc);
+                params.put("email", email);
+                break;
+
+            case VISIT:
+                Date d = new Date();
+                params.put("message",  "visit");
+                params.put("timestamp",  Long.toString(d.getTime()));
+                params.put("session", sesion);
+                params.put("gameId", gameId);
+                break;
+
+
+            case VISIT_END:
+                params.put("message",  "visitEnd");
+                params.put("session", sesion);
+                break;
+        }
+
+        this.execute();
+    }
+
     protected Long doInBackground(java.net.URL... urls) {
 
-
         StringBuilder sbParams = new StringBuilder();
-
-          params.put("message", "visitor");
-          params.put("session", sesion);
-          params.put("name",  name);
-          params.put("age", age);
-          params.put("location", loc);
-          params.put("email", email);
-
-
 
         int i = 0;
 

@@ -116,7 +116,8 @@ public class VisitorForm extends AppCompatActivity implements View.OnFocusChange
             postino.setLoc(localidad.getText().toString());
             postino.setEmail(email.getText().toString());
 
-            postino.execute();
+//            postino.execute();
+            postino.setMessageType(Postino.VISITOR);
 
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
