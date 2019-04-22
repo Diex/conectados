@@ -4,13 +4,11 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -33,7 +31,13 @@ public class VisitorForm extends AppCompatActivity implements View.OnFocusChange
         super.onCreate(savedInstanceState);
         // muestro primero el formulario
         setContentView(R.layout.activity_form);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+
+//        Toolbar toolbar;
+//        toolbar = (Toolbar) findViewById(R.id.instructions);
+//        setSupportActionBar(toolbar);
+
+
+
 
 
 
@@ -104,15 +108,15 @@ public class VisitorForm extends AppCompatActivity implements View.OnFocusChange
 
         if(v.getId() == R.id.submit){
 
-            final PostVisitor postVisitor = new PostVisitor(this);
+            final Postino postino = new Postino(this);
 
-            postVisitor.setSesion(MainActivity.uniqueID);
-            postVisitor.setName(name.getText().toString());
-            postVisitor.setAge(""+ages.getSelectedItemPosition());
-            postVisitor.setLoc(localidad.getText().toString());
-            postVisitor.setEmail(email.getText().toString());
+            postino.setSesion(MainActivity.uniqueID);
+            postino.setName(name.getText().toString());
+            postino.setAge(""+ages.getSelectedItemPosition());
+            postino.setLoc(localidad.getText().toString());
+            postino.setEmail(email.getText().toString());
 
-            postVisitor.execute();
+            postino.execute();
 
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
@@ -125,14 +129,14 @@ public class VisitorForm extends AppCompatActivity implements View.OnFocusChange
 
         }else if(v.getId() == R.id.noinfo){
 
-            final PostVisitor postVisitor = new PostVisitor(this);
+            final Postino postino = new Postino(this);
 
-            postVisitor.setSesion(MainActivity.uniqueID);
-            postVisitor.setName("anonymous user");
-            postVisitor.setLoc("-");
-            postVisitor.setEmail("-");
+            postino.setSesion(MainActivity.uniqueID);
+            postino.setName("anonymous user");
+            postino.setLoc("-");
+            postino.setEmail("-");
 
-            postVisitor.execute();
+            postino.execute();
 
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
@@ -164,12 +168,16 @@ public class VisitorForm extends AppCompatActivity implements View.OnFocusChange
         ((TextView) v).setOnFocusChangeListener(null);
     }
 
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_form, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -177,13 +185,16 @@ public class VisitorForm extends AppCompatActivity implements View.OnFocusChange
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.action_finish) {
-//            setCurrentItem(installations.get((int) (Math.random()*installations.size())));
-            return true;
-        }
+        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_favorite) {
+//            Toast.makeText(MainActivity.this, "Action clicked", Toast.LENGTH_LONG).show();
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
     public static class MySpinnerAdapter extends ArrayAdapter<String> {
         // (In reality I used a manager which caches the Typeface objects)
@@ -208,5 +219,7 @@ public class VisitorForm extends AppCompatActivity implements View.OnFocusChange
             view.setTypeface(VisitorForm.merloLight);
             return view;
         }
+
+
     }
 }

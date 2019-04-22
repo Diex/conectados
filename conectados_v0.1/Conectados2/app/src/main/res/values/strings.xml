@@ -10,6 +10,7 @@
     <string name="form_clear">BORRAR</string>
     <string name="form_noinfo">PREFIERO NO CONTESTAR</string>
     <string name="form_age_prompt">¿Cuál es tu edad?</string>
+    <string name="instructions">INSTRUCCIONES</string>
 
     <string-array name="form_ages">
         <item>¿Cuál es tu edad?</item>

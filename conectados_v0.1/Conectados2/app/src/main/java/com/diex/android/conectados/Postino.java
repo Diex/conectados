@@ -20,7 +20,7 @@ import java.util.HashMap;
 
 
 
-public class PostVisitor extends AsyncTask<URL, Integer, Long> {
+public class Postino extends AsyncTask<URL, Integer, Long> {
 
     private URL serverAddres;
     private HttpURLConnection urlConnection;
@@ -30,9 +30,13 @@ public class PostVisitor extends AsyncTask<URL, Integer, Long> {
     // TODO esto no sirve por la busca en 8.8.8.8
     //private final String URL = "http://sulkys-Mac-pro.local/8000";
 
-    public PostVisitor(Context context){
+    HashMap<String, String> params;
+
+
+    public Postino(Context context){
         this.context = context;
         URL = context.getString(R.string.server_url);
+        params = new HashMap<>();
     }
 
     String sesion = "";
@@ -68,16 +72,13 @@ public class PostVisitor extends AsyncTask<URL, Integer, Long> {
 
 
         StringBuilder sbParams = new StringBuilder();
-        HashMap<String, String> params;
-
-        params = new HashMap<>();
 
           params.put("message", "visitor");
-            params.put("session", sesion);
-            params.put("name",  name);
-            params.put("age", age);
-            params.put("location", loc);
-            params.put("email", email);
+          params.put("session", sesion);
+          params.put("name",  name);
+          params.put("age", age);
+          params.put("location", loc);
+          params.put("email", email);
 
 
 

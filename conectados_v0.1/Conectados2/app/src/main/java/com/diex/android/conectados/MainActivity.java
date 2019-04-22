@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements Visitable{
 
         itemsViewer = findViewById(R.id.itemsViewer);
         itemsViewer.setAdapter(new ItemsAdapter(this, installations));
+
         visitController = new VisitController(this);
         visitController.setInstallationsToMonitor(installations);
     }
@@ -169,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements Visitable{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-       // getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -181,7 +182,8 @@ public class MainActivity extends AppCompatActivity implements Visitable{
         int id = item.getItemId();
 
         if (id == R.id.action_finish) {
-            setCurrentItem(installations.get((int) (Math.random()*installations.size())));
+//            setCurrentItem(installations.get((int) (Math.random()*installations.size())));
+
             return true;
         }
 
